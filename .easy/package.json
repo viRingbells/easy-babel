@@ -1,5 +1,5 @@
 {
-    "name": "esay-babel",
+    "name": "easy-babel",
     "version": "0.0.1-alpha-1",
     "description": "Easy use of babel to parse your projects/modules",
     "main": "index",
