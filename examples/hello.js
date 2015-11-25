@@ -59,6 +59,6 @@ debug('Example: export');
 export default 'export';
 
 debug('Example: async/await');
-async function () tmp1 {};
-async function () m { await tmp1(); }
+async function tmp1 () {};
+async function m () { await tmp1(); }
 m();
