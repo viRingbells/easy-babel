@@ -36,8 +36,8 @@ debug('Example: default param');
 function g (a, b = 3, c) {};
 
 debug('Example: spread');
-var tmp1 = [1, 2, 3];
-var h = [...tmp1];
+var tmp3 = [1, 2, 3];
+var h = [...tmp3];
 
 debug('Example: rest');
 var [...i] = [1, 2, 3];
@@ -49,8 +49,8 @@ debug('Example: const');
 const k = 1;
 
 debug('Example: for of');
-var tmp1 = [1, 2, 3, 4];
-for (var l of tmp1) {}
+var tmp4 = [1, 2, 3, 4];
+for (var l of tmp4) {}
 
 debug('Example: modules');
 import assert from 'assert';
@@ -59,6 +59,6 @@ debug('Example: export');
 export default 'export';
 
 debug('Example: async/await');
-async function tmp1 () {};
-async function m () { await tmp1(); }
+async function tmp5 () {};
+async function m () { await tmp5(); }
 m();

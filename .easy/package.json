@@ -2,7 +2,7 @@
     "name": "esay-babel",
     "version": "0.0.1",
     "description": "Easy use of babel to parse your projects/modules",
-    "main": ".easy",
+    "main": "index.js",
     "directories": {
         "example": "examples"
     },
@@ -53,6 +53,5 @@
     },
     "engines": {
         "node": ">=5.0.0"
-    },
-    "main_easy": "index.js"
+    }
 }
