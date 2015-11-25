@@ -3,23 +3,23 @@
  **/
 'use strict';
 
-const cp = require('child_process');
-const chalk = require('chalk');
-const debug = require('debug')('easy-babel');
-const extend = require('extend');
-const fs = require('fs');
-const mkdirp = require('mkdirp').sync;
-const path = require('path');
-const program = require('commander');
-const testv = require('test-version');
-const cwd = process.cwd();
+var cp = require('child_process');
+var chalk = require('chalk');
+var debug = require('debug')('easy-babel');
+var extend = require('extend');
+var fs = require('fs');
+var mkdirp = require('mkdirp').sync;
+var path = require('path');
+var program = require('commander');
+var testv = require('test-version');
+var cwd = process.cwd();
 //const bwd     = path.join(__dirname, '..');
-const bwd = process.cwd();
+var bwd = process.cwd();
 
-const extnames = ['.js', '.jsx', '.es6'];
-const babelpath = path.join(__dirname, '../node_modules/.bin/babel');
+var extnames = ['.js', '.jsx', '.es6'];
+var babelpath = path.join(path.dirname(require.resolve('babel-cli')), '../.bin/babel');
 
-let VERSION;
+var VERSION = undefined;
 
 /**
  * Parse targets with babel.
@@ -47,9 +47,9 @@ function prepare_targets(targets) {
         targets = ['./'];
     }
     debug('Parse: making absolute path');
-    const result = [];
-    for (let i = 0; i < targets.length; i++) {
-        let target = targets[i];
+    var result = [];
+    for (var i = 0; i < targets.length; i++) {
+        var target = targets[i];
         if ('string' !== typeof target) {
             throw new Error('target should be a path');
         }
@@ -70,8 +70,8 @@ function prepare_targets(targets) {
  **/
 function prepare_babelrc() {
     debug('Parse: prepare babelrc');
-    const version = adapt_version();
-    const babelrc_filename = path.join(__dirname, '../babelrc/babel_v' + version);
+    var version = adapt_version();
+    var babelrc_filename = path.join(__dirname, '../babelrc/babel_v' + version);
     copy_babelrc(babelrc_filename);
 }
 
@@ -81,7 +81,7 @@ function prepare_babelrc() {
 function copy_babelrc(filename) {
     debug('Parse: use ' + filename);
     cp.execSync('cp ' + filename + ' ' + path.join(bwd, '.babelrc'));
-    process.on('exit', code => {
+    process.on('exit', function (code) {
         debug('Parse: clear .babelrc');
         cp.execSync('rm ' + path.join(bwd, '.babelrc'));
     });
@@ -90,13 +90,13 @@ function copy_babelrc(filename) {
 /**
  * return a node version that target version is compatible with
  **/
-const versions = ["5.0.0", "4.0.0", "3.0.0", "2.0.0", "1.0.0", "0.11.0"];
+var versions = ["5.0.0", "4.0.0", "3.0.0", "2.0.0", "1.0.0", "0.11.0"];
 function adapt_version() {
     debug('Parse: match version');
-    const target_version = program.nodeversion || process.version;
+    var target_version = program.nodeversion || process.version;
     debug('Parse: target version is ' + target_version);
-    for (let i = 0; i < versions.length; i++) {
-        let version = versions[i];
+    for (var i = 0; i < versions.length; i++) {
+        var version = versions[i];
         if (testv(target_version, ">=" + version)) {
             debug('Parse: versioin adapted is ' + version);
             VERSION = version;
@@ -107,7 +107,7 @@ function adapt_version() {
     throw new Error('Target version ' + target_version + ' is not supported!');
 }
 
-const specail_target_list = ['node_modules', 'package.json', '.easy'];
+var specail_target_list = ['node_modules', 'package.json', '.easy'];
 function is_special(filename) {
     if (filename[0] === '.' || specail_target_list.indexOf(filename) >= 0) {
         return true;
@@ -120,9 +120,9 @@ function is_special(filename) {
  **/
 function parse_targets(targets) {
     debug('Parse: parse targets');
-    for (let i = 0; i < targets.length; i++) {
-        const target = targets[i];
-        const name = path.basename(target);
+    for (var i = 0; i < targets.length; i++) {
+        var target = targets[i];
+        var name = path.basename(target);
         if (is_special(name)) {
             special_targets.push(target);
             continue;
@@ -133,14 +133,14 @@ function parse_targets(targets) {
 
 function parse_target(target) {
     debug('Parse: parse target ' + target);
-    const isDirectory = fs.statSync(target).isDirectory();
-    const filename = path.basename(target);
-    const target_dir = isDirectory ? target : path.dirname(target);
-    const easy_dir = path.join(target_dir, '.easy');
+    var isDirectory = fs.statSync(target).isDirectory();
+    var filename = path.basename(target);
+    var target_dir = isDirectory ? target : path.dirname(target);
+    var easy_dir = path.join(target_dir, '.easy');
     debug('Parse: easy diretory is ' + easy_dir);
     cp.execSync('rm -rf ' + easy_dir);
     mkdirp(easy_dir);
-    const to = isDirectory ? easy_dir : path.join(easy_dir, filename);
+    var to = isDirectory ? easy_dir : path.join(easy_dir, filename);
     if (isDirectory) {
         babel_dir(target, to);
     } else {
@@ -150,7 +150,7 @@ function parse_target(target) {
 }
 
 function babel_file(from, to) {
-    const filename = path.basename(from);
+    var filename = path.basename(from);
     if (is_special(filename) || extnames.indexOf(path.extname(from)) < 0) {
         return;
     }
@@ -162,12 +162,12 @@ function babel_file(from, to) {
 
 function babel_dir(dir, to_dir) {
     debug('Parse: babel dir ' + dir);
-    fs.readdirSync(dir).forEach(filename => {
+    fs.readdirSync(dir).forEach(function (filename) {
         if (is_special(filename)) {
             return;
         }
-        let from = path.join(dir, filename);
-        let to = path.join(to_dir, filename);
+        var from = path.join(dir, filename);
+        var to = path.join(to_dir, filename);
         if (fs.statSync(from).isDirectory()) {
             debug('Parse: babel dir ' + from + ' ==> ' + to);
             cp.execSync('cp -r ' + from + ' ' + to);
@@ -178,7 +178,7 @@ function babel_dir(dir, to_dir) {
         }
     });
     debug('Parse: fix package.json');
-    let pkg = {};
+    var pkg = {};
     if (fs.existsSync(path.join(dir, 'package.json'))) {
         pkg = require(path.join(dir, 'package.json'));
     }
@@ -188,7 +188,7 @@ function babel_dir(dir, to_dir) {
         throw new Error("Invalid package.json, missing main, or should remove main_easy");
     }
     pkg.main = pkg.main_easy || pkg.main || 'index';
-    let pkg_easy = extend(true, {}, pkg);
+    var pkg_easy = extend(true, {}, pkg);
     delete pkg_easy.main_easy;
     fs.writeFileSync(path.join(to_dir, 'package.json'), JSON.stringify(pkg_easy, null, 4));
     pkg.main_easy = pkg.main_easy || pkg.main;

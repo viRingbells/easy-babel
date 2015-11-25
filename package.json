@@ -6,6 +6,10 @@
     "directories": {
         "example": "examples"
     },
+    "bin": {
+        "easy": "./bin/easy",
+        "easy-babel": "./bin/easy-babel"
+    },
     "files": [
         "LICENSE",
         "README.md",
@@ -84,7 +88,7 @@
         "babel-plugin-transform-es2015-unicode-regex": "^6.1.18"
     },
     "engines": {
-        "node": ">=5.0.0"
+        "node": ">=0.11.0"
     },
     "main_easy": "index"
 }
