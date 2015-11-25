@@ -1,58 +1,7 @@
 {
-    "name": "esay-babel",
-    "version": "0.0.1",
-    "description": "Easy use of babel to parse your projects/modules",
-    "main": ".easy",
-    "directories": {
-        "example": "examples"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/viRingbells/esay-babel.git"
-    },
-    "keywords": [
-        "babel"
-    ],
-    "author": "Sun Haohao",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/viRingbells/esay-babel/issues"
-    },
-    "homepage": "https://github.com/viRingbells/esay-babel#readme",
-    "dependencies": {
-        "babel-cli": "^6.1.2",
-        "babel-plugin-syntax-async-functions": "^6.1.18",
-        "babel-plugin-transform-async-to-generator": "^6.1.18",
-        "babel-plugin-transform-es2015-arrow-functions": "^6.1.18",
-        "babel-plugin-transform-es2015-block-scoped-functions": "^6.1.18",
-        "babel-plugin-transform-es2015-block-scoping": "^6.1.18",
-        "babel-plugin-transform-es2015-classes": "^6.1.21",
-        "babel-plugin-transform-es2015-computed-properties": "^6.1.18",
-        "babel-plugin-transform-es2015-constants": "^6.1.4",
-        "babel-plugin-transform-es2015-destructuring": "^6.1.18",
-        "babel-plugin-transform-es2015-for-of": "^6.1.18",
-        "babel-plugin-transform-es2015-function-name": "^6.1.18",
-        "babel-plugin-transform-es2015-literals": "^6.1.18",
-        "babel-plugin-transform-es2015-modules-commonjs": "^6.1.20",
-        "babel-plugin-transform-es2015-object-super": "^6.1.18",
-        "babel-plugin-transform-es2015-parameters": "^6.1.18",
-        "babel-plugin-transform-es2015-shorthand-properties": "^6.1.18",
-        "babel-plugin-transform-es2015-spread": "^6.1.18",
-        "babel-plugin-transform-es2015-sticky-regex": "^6.1.18",
-        "babel-plugin-transform-es2015-template-literals": "^6.1.18",
-        "babel-plugin-transform-es2015-typeof-symbol": "^6.1.18",
-        "babel-plugin-transform-es2015-unicode-regex": "^6.1.18",
-        "chalk": "^1.1.1",
-        "commander": "^2.9.0",
-        "extend": "^3.0.0",
-        "mkdirp": "^0.5.1",
-        "test-version": "^1.0.1"
-    },
     "engines": {
         "node": ">=5.0.0"
     },
-    "main_easy": "index.js"
+    "main": ".easy",
+    "main_easy": "index"
 }
