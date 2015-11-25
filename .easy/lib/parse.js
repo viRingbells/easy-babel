@@ -178,11 +178,9 @@ function babel_dir(dir, to_dir) {
         }
     });
     debug('Parse: fix package.json');
-    let pkg;
-    try {
+    let pkg = {};
+    if (fs.existsSync(path.join(dir, 'package.json'))) {
         pkg = require(path.join(dir, 'package.json'));
-    } catch (e) {
-        pkg = {};
     }
     pkg.engines = pkg.engines || {};
     pkg.engines.node = '>=' + VERSION;
