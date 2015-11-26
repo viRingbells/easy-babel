@@ -90,5 +90,8 @@
     "engines": {
         "node": ">=5.0.0"
     },
-    "main_easy": "index"
+    "main_easy": "index",
+    "devDependencies": {
+        "debug": "^2.2.0"
+    }
 }

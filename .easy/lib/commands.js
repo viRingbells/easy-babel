@@ -2,11 +2,13 @@
 
 'node version >= 5.0.0';
 
+const cwd = process.cwd();
+GLOBAL.commands_cwd = cwd;
+
 const program = require('commander');
 const debug = require('debug')('easy-babel');
 const depends = require('./depends');
 const parse = require('./parse');
-const cwd = process.cwd();
 
 process.on('exit', code => {
     debug('Command: cd back to ' + cwd);
@@ -29,7 +31,7 @@ program.option('-v, --nodeversion <node version>', 'adapt to a certain version o
 
 program.command('parse [targets...]').alias('release').action(parse);
 
-program.command('depends').alias('dependencies').action(depends);
+program.command('depends [targets...]').alias('dependencies').action(depends);
 
 program.command('run [target]').alias('start').action(run);
 

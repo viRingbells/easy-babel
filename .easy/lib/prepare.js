@@ -3,15 +3,15 @@
  **/
 'use strict';
 
-const cwd     = GLOBAL.commands_cwd;
-const debug   = require('debug')('easy-babel');
-const path    = require('path');
+const cwd = GLOBAL.commands_cwd;
+const debug = require('debug')('easy-babel');
+const path = require('path');
 
 /**
  * prepare targets, returns a list of absolute paths
  * If no args given, parse './'
  **/
-exports.targets = (targets) => {
+exports.targets = targets => {
     debug('Prepare: prepare targets : ' + targets);
     if (!Array.isArray(targets)) {
         targets = [targets];
