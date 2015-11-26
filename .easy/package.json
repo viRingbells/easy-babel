@@ -1,6 +1,6 @@
 {
     "name": "easy-babel",
-    "version": "0.0.1-alpha-1",
+    "version": "0.0.1-alpha-2",
     "description": "Easy use of babel to parse your projects/modules",
     "main": "index",
     "directories": {
@@ -88,6 +88,6 @@
         "babel-plugin-transform-es2015-unicode-regex": "^6.1.18"
     },
     "engines": {
-        "node": ">=0.11.0"
+        "node": ">=5.0.0"
     }
 }

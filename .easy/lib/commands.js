@@ -2,12 +2,13 @@
 
 'node version >= 5.0.0';
 
-var program = require('commander');
-var debug = require('debug')('easy-babel');
-var parse = require('./parse');
-var cwd = process.cwd();
+const program = require('commander');
+const debug = require('debug')('easy-babel');
+const depends = require('./depends');
+const parse = require('./parse');
+const cwd = process.cwd();
 
-process.on('exit', function (code) {
+process.on('exit', code => {
     debug('Command: cd back to ' + cwd);
     process.chdir(cwd);
 });
@@ -15,7 +16,7 @@ process.on('exit', function (code) {
 debug('Commands: initializing commands');
 program.usage('[options] <action> <file>');
 
-program.on('--help', function () {
+program.on('--help', () => {
     console.log('  Examples:');
     console.log('');
     console.log('    $ easy depends');
@@ -38,7 +39,7 @@ program.command('*').action(help);
  * Print help if exec without argv
  **/
 if (!process.argv.slice(2).length) {
-    process.nextTick(function () {
+    process.nextTick(() => {
         program.outputHelp();
     });
 }
@@ -47,12 +48,10 @@ function help() {
     program.outputHelp();
 }
 
-function depends() {}
-
 function run() {}
 
 debug('Commands: start to parse process argv');
-module.exports = function () {
+module.exports = () => {
     program.parse(process.argv);
 };
 

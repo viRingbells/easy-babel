@@ -3,7 +3,7 @@
  **/
 'use strict';
 
-var debug = require('debug')('easy-babel');
+const debug = require('debug')('easy-babel');
 
 exports.commands = require('./lib/commands');
 
