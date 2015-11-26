@@ -49,7 +49,7 @@ function copy_babelrc(filename) {
     cp.execSync('cp ' + filename + ' ' + path.join(bwd, '.babelrc'));
     process.on('exit', code => {
         debug('Parse: clear .babelrc');
-        cp.execSync('rm ' + path.join(bwd, '.babelrc'));
+        cp.execSync('rm -f ' + path.join(bwd, '.babelrc'));
     });
 }
 
