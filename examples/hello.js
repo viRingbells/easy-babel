@@ -1,5 +1,5 @@
 /**
- * Example of print hello world
+ * Example of es6
  **/
 'use strict';
 
@@ -62,3 +62,6 @@ debug('Example: async/await');
 async function tmp5 () {};
 async function m () { await tmp5(); }
 m();
+
+debug('Example: import es6');
+import es6 from 'es6';

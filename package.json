@@ -1,14 +1,14 @@
 {
     "name": "easy-babel",
-    "version": "0.0.1-alpha-3",
+    "version": "0.0.1-alpha-4",
     "description": "Easy use of babel to parse your projects/modules",
     "main": ".easy",
     "directories": {
         "example": "examples"
     },
     "bin": {
-        "easy": "./bin/easy",
-        "easy-babel": "./bin/easy-babel"
+        "easy": ".easy/bin/easy",
+        "easy-babel": ".easy/bin/easy-babel"
     },
     "files": [
         "LICENSE",
@@ -20,7 +20,7 @@
         ".easy"
     ],
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "cd .easy && rm -rf node_modules && ln -s ../node_modules node_modules && NODE_ENV=testing ./node_modules/.bin/mocha --require should test/"
     },
     "repository": {
         "type": "git",
@@ -90,8 +90,15 @@
     "engines": {
         "node": ">=5.0.0"
     },
-    "main_easy": "index",
     "devDependencies": {
         "debug": "^2.2.0"
+    },
+    "easy": {
+        "main": "index.js",
+        "scripts": "NODE_ENV=testing ./node_modules/.bin/mocha --require should test/",
+        "bin": {
+            "easy": "bin/easy",
+            "easy-babel": "bin/easy-babel"
+        }
     }
 }

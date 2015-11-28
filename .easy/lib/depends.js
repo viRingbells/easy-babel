@@ -26,7 +26,6 @@ function depends(targets) {
 function directories(parentdir) {
     parentdir = parentdir || '.';
     return filename => {
-        console.log(path.join(parentdir, filename));
         return fs.statSync(path.join(parentdir, filename)).isDirectory();
     };
 }
@@ -36,7 +35,9 @@ function loadPkg(dirname) {
     try {
         pkg = require(path.join(dirname, 'package.json'));
     } catch (e) {
-        console.warn(chalk.cyan('  Fail to load package.json in ') + chalk.red(dirname) + chalk.cyan(' message: ' + e.message));
+        if (process.env.NODE_ENV !== 'testing') {
+            console.warn(chalk.cyan('  Fail to load package.json in ') + chalk.red(dirname) + chalk.cyan(' message: ' + e.message));
+        }
     }
     return pkg;
 }
@@ -68,22 +69,36 @@ function find_module_path(module_name, dirname) {
             return _path;
         }
     }
-    console.warn(chalk.cyan('module ') + chalk.yellow(module_name) + chalk.cyan(' not found, skip'));
+    if (process.env.NODE_ENV !== 'testing') {
+        console.warn(chalk.cyan('module ') + chalk.yellow(module_name) + chalk.cyan(' not found, skip'));
+    }
     return null;
 }
 
 function parse_node_module_by_dir(node_module_path) {
-    debug('Depends: parse by dir ' + dirname);
-    fs.readdirSync(node_module_path).filter(directories(node_module_path)).forEach(parse_module);
+    debug('Depends: parse by dir ' + node_module_path);
+    fs.readdirSync(node_module_path).filter(directories(node_module_path)).forEach(dirname => {
+        parse_module(path.join(node_module_path, dirname));
+    });
 }
 
 function parse_module(module_path) {
-    if (module_path[0] === '.') return;
+    if (!path.isAbsolute(module_path)) {
+        if (process.env.NODE_ENV !== 'testing') {
+            console.warn(chalk.cyan('  ') + chalk.red(module_path) + ' ' + chalk.cyan(' is not a directory skip...'));
+        }
+        return;
+    }
+    const module_dirname = path.basename(module_path);
+    if (module_dirname[0] === '.') return;
     let pkg;
     try {
         pkg = require(path.join(module_path, 'package.json'));
     } catch (e) {
-        console.warn(chalk.cyan('  Fail to load package.json in ') + chalk.red(module_path) + ' ' + chalk.cyan('skip...'));
+        if (process.env.NODE_ENV !== 'testing') {
+            console.warn(chalk.cyan('  Fail to load package.json in ') + chalk.red(module_path) + ' ' + chalk.cyan('message is ' + e.message + ' skip...'));
+        }
+        return;
     }
     if (!pkg || !pkg.engines || !pkg.engines.node || testv(version(), pkg.engines.node)) {
         debug('Depends: engine fullfills demand of ' + module_path + ' skip...');
