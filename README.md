@@ -1,8 +1,6 @@
 # esay-babel
 Easy use of babel to parse your project/modules
 
-# _this project is under development, *UNSTABLE*_
-
 ## Install
 
 ```
@@ -39,7 +37,7 @@ Since your parsed code is under directory `.easy`, you can run directly by
 $ node .easy/**/*.js
 ```
 
-or use `easy-node`:
+or use `easy-node`: _not implemented_
 
 ```
 $ alias node=easy-node
