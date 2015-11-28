@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const exec = require('child_process').execSync;
+const path = require('path');
+const execPath = process.execPath;
+
+let script_name = null;
+let node_args   = [];
+let script_args = [];
+
+for (let i = 2; i < process.argv.length; i++) {
+    const argv = process.argv[i];
+    if (!script_name && argv[0] === '-') {
+        node_argv.push(argv);
+        continue;
+    }
+    else {
+        if (!script_name) {
+            script_name = argv;
+        }
+        else {
+            script_args.push(argv);
+        }
+    }
+}
+
+//const binname = 'easy-babel';
+const binname = 'release';
+
+let cmd = execPath + ' ' + path.join(__dirname, binname) + ' run ' + script_name;
+
+if (node_args.length > 0) {
+    cmd += ' --nodeargs "' + node_args.join(' ') + '"';
+}
+
+if (script_args.length > 0) {
+    cmd += ' --scriptargs "' + script_args.join(' ') + '"';
+}
+
+console.log(exec(cmd).toString().replace(/\n$/,''));

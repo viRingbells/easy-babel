@@ -63,5 +63,7 @@ async function tmp5 () {};
 async function m () { await tmp5(); }
 m();
 
-debug('Example: import es6');
-import es6 from 'es6';
+//debug('Example: import es6');
+//import es6 from 'es6';
+
+console.log(process.argv);

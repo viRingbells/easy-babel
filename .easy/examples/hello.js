@@ -29,10 +29,6 @@ var _assert = require('assert');
 
 var _assert2 = _interopRequireDefault(_assert);
 
-var _es = require('es6');
-
-var _es2 = _interopRequireDefault(_es);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { var callNext = step.bind(null, "next"); var callThrow = step.bind(null, "throw"); function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(callNext, callThrow); } } callNext(); }); }; }
@@ -122,4 +118,7 @@ debug('Example: async/await');
 
 m();
 
-debug('Example: import es6');
+//debug('Example: import es6');
+//import es6 from 'es6';
+
+console.log(process.argv);
