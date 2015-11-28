@@ -1,6 +1,9 @@
 # esay-babel
 Easy use of babel to parse your project/modules
 
+[![NPM version][npm-image]][npm-url]
+[![build status][travis-image]][travis-url]
+
 ## Install
 
 ```
@@ -37,9 +40,14 @@ Since your parsed code is under directory `.easy`, you can run directly by
 $ node .easy/**/*.js
 ```
 
-or use `easy-node`: _not implemented_
+or use `easy-node`:
 
 ```
 $ alias node=easy-node
 $ node **/*.js
 ```
+
+[npm-image]: https://img.shields.io/npm/v/easy-babel.svg
+[travis-image]: https://travis-ci.org/viRingbells/easy-babel.svg?branch=master
+[npm-url]: https://www.npmjs.com/package/easy-babel
+[travis-url]: https://travis-ci.org/viRingbells/easy-babel
