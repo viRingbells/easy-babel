@@ -3,10 +3,6 @@ Easy use of babel to parse your project/modules
 
 # _this project is under development, *UNSTABLE*_
 
-## Expected
-
-_This is an example of what easy-babel is expected to be_
-
 ## Install
 
 ```
@@ -20,7 +16,7 @@ $ npm install -g easy-babel
 Run the following command under your module, `my_module` for example,
 
 ```
-$ easy release [version]
+$ easy release [targets...] -v [version]
 ```
 
 You'll have a directory `.easy` for parsed files, and a new|modified `package.json` which refers `main` to `.easy`
@@ -30,7 +26,7 @@ Then `import my_module from "my_module"` will import the parsed files as expecte
 ## Parse your dependencies
 
 ```
-$ easy depends [version]
+$ easy depends [targets...] -v [version]
 ```
 
 This command will parse your dependencies which needs higher node version with `$ easy relase`
