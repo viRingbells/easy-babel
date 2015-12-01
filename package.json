@@ -1,6 +1,6 @@
 {
     "name": "easy-babel",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Easy use of babel to parse your projects/modules",
     "main": ".easy",
     "directories": {
