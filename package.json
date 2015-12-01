@@ -60,6 +60,7 @@
         "babel-plugin-transform-es2015-unicode-regex": "^6.1.18",
         "chalk": "^1.1.1",
         "commander": "^2.9.0",
+        "debug": "^2.2.0",
         "extend": "^3.0.0",
         "mkdirp": "^0.5.1",
         "test-version": "^1.0.1"
@@ -91,7 +92,6 @@
         "node": ">=5.0.0"
     },
     "devDependencies": {
-        "debug": "^2.2.0",
         "mocha": "^2.3.4",
         "should": "^7.1.1"
     },
