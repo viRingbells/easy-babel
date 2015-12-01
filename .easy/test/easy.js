@@ -15,7 +15,7 @@ process.on('exit', code => {
     exec('cd ' + home + ' && rm -rf examples/node_modules && rm -rf examples/.easy');
 });
 
-['5.0.0', '4.0.0', '3.0.0', '2.0.0', '1.0.0', '0.11.0'].forEach(version => {
+['5.0.0', '4.0.0', '3.0.0', '2.0.0', '1.0.0', '0.11.9'].forEach(version => {
     describe('Node version is ' + version, () => {
         it('should be ok parsing examples dependencies', done => {
             let error = null;

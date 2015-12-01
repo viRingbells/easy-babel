@@ -97,12 +97,12 @@ function parse_target(target) {
 }
 
 function babel_file(from, to) {
+    cp.execSync('cp ' + from + ' ' + to);
     const filename = path.basename(from);
     if (is_special(filename) || extnames.indexOf(path.extname(from)) < 0) {
         return;
     }
     debug('Parse: babel ' + from + ' -o ' + to);
-    cp.execSync('cp ' + from + ' ' + to);
     process.chdir(bwd);
     cp.execSync(babelpath + ' ' + from + ' -o ' + to);
 }
