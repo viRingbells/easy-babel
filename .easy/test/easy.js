@@ -4,21 +4,21 @@
  * Test
  **/
 
-const debug = require('debug')('easy-babel');
+var debug = require('debug')('easy-babel');
 
-const exec = require('child_process').execSync;
-const path = require('path');
-const should = require('should');
-const home = path.join(__dirname, '..');
+var exec = require('child_process').execSync;
+var path = require('path');
+var should = require('should');
+var home = path.join(__dirname, '..');
 
-process.on('exit', code => {
+process.on('exit', function (code) {
     exec('cd ' + home + ' && rm -rf examples/node_modules && rm -rf examples/.easy');
 });
 
-['5.0.0', '4.0.0', '3.0.0', '2.0.0', '1.0.0', '0.11.9'].forEach(version => {
-    describe('Node version is ' + version, () => {
-        it('should be ok parsing examples dependencies', done => {
-            let error = null;
+['5.0.0', '4.0.0', '3.0.0', '2.0.0', '1.0.0', '0.11.9'].forEach(function (version) {
+    describe('Node version is ' + version, function () {
+        it('should be ok parsing examples dependencies', function (done) {
+            var error = null;
             try {
                 exec('cd ' + home + ' && rm -rf examples/node_modules && cp -r examples/node_modules_easy examples/node_modules && ./bin/release depends examples -v ' + version);
             } catch (e) {
@@ -29,8 +29,8 @@ process.on('exit', code => {
             done();
         });
 
-        it('should be ok parsing examples/hello.js', done => {
-            let error = null;
+        it('should be ok parsing examples/hello.js', function (done) {
+            var error = null;
             try {
                 exec('cd ' + home + ' && ./bin/release release examples/hello.js -v ' + version);
             } catch (e) {
@@ -41,8 +41,8 @@ process.on('exit', code => {
             done();
         });
 
-        it('should be ok running examples/.easy/hello.js', done => {
-            let error = null;
+        it('should be ok running examples/.easy/hello.js', function (done) {
+            var error = null;
             try {
                 exec('cd ' + home + ' && node examples/.easy/hello.js');
             } catch (e) {
@@ -53,8 +53,8 @@ process.on('exit', code => {
             done();
         });
 
-        it('should be ok running by easy-babel run examples/hello.js', done => {
-            let error = null;
+        it('should be ok running by easy-babel run examples/hello.js', function (done) {
+            var error = null;
             done();
         });
     });

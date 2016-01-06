@@ -3,23 +3,23 @@
  **/
 'use strict';
 
-const cp = require('child_process');
-const chalk = require('chalk');
-const debug = require('debug')('easy-babel');
-const extend = require('extend');
-const fs = require('fs');
-const mkdirp = require('mkdirp').sync;
-const path = require('path');
-const program = require('commander');
-const prepare = require('./prepare');
-const process_pkg = require('./package');
-const version = require('./version');
-const cwd = process.cwd();
+var cp = require('child_process');
+var chalk = require('chalk');
+var debug = require('debug')('easy-babel');
+var extend = require('extend');
+var fs = require('fs');
+var mkdirp = require('mkdirp').sync;
+var path = require('path');
+var program = require('commander');
+var prepare = require('./prepare');
+var process_pkg = require('./package');
+var version = require('./version');
+var cwd = process.cwd();
 //const bwd     = path.join(__dirname, '..');
-const bwd = process.cwd();
+var bwd = process.cwd();
 
-const extnames = ['.js', '.jsx', '.es6'];
-const babelpath = path.join(path.dirname(require.resolve('babel-cli')), '../.bin/babel');
+var extnames = ['.js', '.jsx', '.es6'];
+var babelpath = path.join(path.dirname(require.resolve('babel-cli')), '../.bin/babel');
 
 /**
  * Parse targets with babel.
@@ -38,23 +38,58 @@ function parse(targets) {
  **/
 function prepare_babelrc() {
     debug('Parse: prepare babelrc');
-    const babelrc_filename = path.join(__dirname, '../babelrc/babel_v' + version());
-    copy_babelrc(babelrc_filename);
-}
-
-/**
- * cp babelrc
- **/
-function copy_babelrc(filename) {
+    var filename = path.join(__dirname, '../babelrc/babelrc_v' + version());
     debug('Parse: use ' + filename);
-    cp.execSync('cp ' + filename + ' ' + path.join(bwd, '.babelrc'));
-    process.on('exit', code => {
-        debug('Parse: clear .babelrc');
-        cp.execSync('rm -f ' + path.join(bwd, '.babelrc'));
+    var to = path.join(bwd, '.babelrc');
+    var content = prepare_babelrc_content(filename);
+    fs.writeFileSync(to, JSON.stringify(content, null, 4));
+    //cp.execSync('cp ' + filename + ' ' + path.join(bwd, '.babelrc'));
+    process.on('exit', function (code) {
+        debug('Parse: clear .babelrc ' + to);
+        cp.execSync('rm -f ' + to);
     });
 }
 
-const specail_target_list = ['node_modules', 'package.json', '.easy'];
+function prepare_babelrc_content(filename, options) {
+    debug("Parse: parsing " + filename);
+    options = options || {};
+    options.except = Array.isArray(options.except) ? options.except : [options.except];
+    var content = JSON.parse(fs.readFileSync(filename));
+    var plugins = content.plugins;
+    if (!Array.isArray(plugins)) {
+        debug("Parse: plugins not array, return directly");
+        return content;
+    }
+    var use = [];
+    plugins = plugins.filter(function (item) {
+        var name = item;
+        if (Array.isArray(item)) {
+            name = item[0];
+        }
+        if (options.except.indexOf(name) >= 0) {
+            return false;
+        }
+        if (name.match(/^babelrc_v/)) {
+            use.push(item);
+            return false;
+        }
+        return true;
+    });
+    use.forEach(function (item) {
+        if (!Array.isArray(item)) {
+            item = [item];
+        }
+        var name = item[0];
+        var options = item[1];
+        debug("Parse: use " + name);
+        var content = prepare_babelrc_content(path.join(path.dirname(filename), name), options);
+        plugins = plugins.concat(content.plugins);
+    });
+    content.plugins = plugins;
+    return content;
+}
+
+var specail_target_list = ['node_modules', 'package.json', '.easy'];
 function is_special(filename) {
     if (filename[0] === '.' || specail_target_list.indexOf(filename) >= 0) {
         return true;
@@ -67,9 +102,9 @@ function is_special(filename) {
  **/
 function parse_targets(targets) {
     debug('Parse: parse targets');
-    for (let i = 0; i < targets.length; i++) {
-        const target = targets[i];
-        const name = path.basename(target);
+    for (var i = 0; i < targets.length; i++) {
+        var target = targets[i];
+        var name = path.basename(target);
         if (is_special(name)) {
             special_targets.push(target);
             continue;
@@ -80,14 +115,14 @@ function parse_targets(targets) {
 
 function parse_target(target) {
     debug('Parse: parse target ' + target);
-    const isDirectory = fs.statSync(target).isDirectory();
-    const filename = path.basename(target);
-    const target_dir = isDirectory ? target : path.dirname(target);
-    const easy_dir = path.join(target_dir, '.easy');
+    var isDirectory = fs.statSync(target).isDirectory();
+    var filename = path.basename(target);
+    var target_dir = isDirectory ? target : path.dirname(target);
+    var easy_dir = path.join(target_dir, '.easy');
     debug('Parse: easy diretory is ' + easy_dir);
     cp.execSync('rm -rf ' + easy_dir);
     mkdirp(easy_dir);
-    const to = isDirectory ? easy_dir : path.join(easy_dir, filename);
+    var to = isDirectory ? easy_dir : path.join(easy_dir, filename);
     if (isDirectory) {
         babel_dir(target, to);
     } else {
@@ -98,7 +133,7 @@ function parse_target(target) {
 
 function babel_file(from, to) {
     cp.execSync('cp ' + from + ' ' + to);
-    const filename = path.basename(from);
+    var filename = path.basename(from);
     if (is_special(filename) || extnames.indexOf(path.extname(from)) < 0) {
         return;
     }
@@ -109,12 +144,12 @@ function babel_file(from, to) {
 
 function babel_dir(dir, to_dir) {
     debug('Parse: babel dir ' + dir);
-    fs.readdirSync(dir).forEach(filename => {
+    fs.readdirSync(dir).forEach(function (filename) {
         if (is_special(filename)) {
             return;
         }
-        let from = path.join(dir, filename);
-        let to = path.join(to_dir, filename);
+        var from = path.join(dir, filename);
+        var to = path.join(to_dir, filename);
         if (fs.statSync(from).isDirectory()) {
             debug('Parse: babel dir ' + from + ' ==> ' + to);
             cp.execSync('cp -r ' + from + ' ' + to);

@@ -1,0 +1,7 @@
+{
+    "plugins": [
+        "babelrc_v2.0.0",
+        "transform-es2015-classes",
+        "transform-es2015-shorthand-properties"
+    ]
+}
