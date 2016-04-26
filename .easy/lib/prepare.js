@@ -3,15 +3,15 @@
  **/
 'use strict';
 
-var cwd = GLOBAL.commands_cwd;
-var debug = require('debug')('easy-babel');
-var path = require('path');
+const cwd = GLOBAL.commands_cwd;
+const debug = require('debug')('easy-babel');
+const path = require('path');
 
 /**
  * prepare targets, returns a list of absolute paths
  * If no args given, parse './'
  **/
-exports.targets = function (targets) {
+exports.targets = targets => {
     debug('Prepare: prepare targets : ' + targets);
     if (!Array.isArray(targets)) {
         targets = [targets];
@@ -21,9 +21,9 @@ exports.targets = function (targets) {
         targets = ['./'];
     }
     debug('Prepare: making absolute path');
-    var result = [];
-    for (var i = 0; i < targets.length; i++) {
-        var target = targets[i];
+    const result = [];
+    for (let i = 0; i < targets.length; i++) {
+        let target = targets[i];
         if ('string' !== typeof target) {
             throw new Error('target should be a path');
         }

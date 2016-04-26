@@ -1,6 +1,6 @@
 {
     "name": "easy-babel",
-    "version": "1.0.1",
+    "version": "0.0.1-alpha-4",
     "description": "Easy use of babel to parse your projects/modules",
     "main": ".easy",
     "directories": {
@@ -60,7 +60,6 @@
         "babel-plugin-transform-es2015-unicode-regex": "^6.1.18",
         "chalk": "^1.1.1",
         "commander": "^2.9.0",
-        "debug": "^2.2.0",
         "extend": "^3.0.0",
         "mkdirp": "^0.5.1",
         "test-version": "^1.0.1"
@@ -89,15 +88,16 @@
         "babel-plugin-transform-es2015-unicode-regex": "^6.1.18"
     },
     "engines": {
-        "node": ">=0.11.9"
+        "node": ">=undefined"
     },
     "devDependencies": {
-        "mocha": "^2.3.4",
-        "should": "^7.1.1"
+        "debug": "^2.2.0"
     },
     "easy": {
         "main": "index.js",
-        "scripts": "NODE_ENV=testing ./node_modules/.bin/mocha --require should test/",
+        "scripts": {
+            "test": "NODE_ENV=testing ./node_modules/.bin/mocha --require should test/"
+        },
         "bin": {
             "easy": "bin/easy",
             "easy-babel": "bin/easy-babel"

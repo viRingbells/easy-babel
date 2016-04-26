@@ -3,21 +3,20 @@
  **/
 'use strict';
 
-var debug = require('debug')('easy-babel');
-var extend = require('extend');
-var fs = require('fs');
-var path = require('path');
-var program = require('commander');
+const debug = require('debug')('easy-babel');
+const extend = require('extend');
+const fs = require('fs');
+const path = require('path');
+const program = require('commander');
 //const version = require('./version');
 
 function process(dir, to_dir) {
     debug('Package: fix package.json ' + dir);
-    var pkg = {};
+    let pkg = {};
     if (fs.existsSync(path.join(dir, 'package.json'))) {
         pkg = require(path.join(dir, 'package.json'));
     }
     pkg.engines = pkg.engines || {};
-    //    pkg.engines.node = '>=' + version();
     pkg.engines.node = '>=' + program.nodeversion;
 
     pkg.easy = pkg.easy || {};
@@ -33,12 +32,11 @@ function process(dir, to_dir) {
 
     // store real scripts in pkg.easy.scripts, and fix pkg.scripts
     if (pkg.scripts) {
-        var run_easy_script = 'cd .easy && rm -rf node_modules && ln -s ../node_modules node_modules && ';
+        const run_easy_script = 'cd .easy && rm -rf node_modules && ln -s ../node_modules node_modules && ';
         pkg.easy.scripts = pkg.easy.scripts || extend(true, {}, pkg.scripts);
-        // pkg.easy.scripts = pkg.easy.scripts || pkg.scripts;
-        for (var name in pkg.scripts) {
-            var script = pkg.scripts[name];
-            if (script.slice(0, run_easy_script.length) !== run_easy_script) {
+        for (let name in pkg.scripts) {
+            const script = pkg.scripts[name];
+            if (script.search(run_easy_script) !== 0) {
                 pkg.easy.scripts[name] = pkg.scripts[name];
                 pkg.scripts[name] = run_easy_script + pkg.scripts[name];
             }
@@ -47,15 +45,15 @@ function process(dir, to_dir) {
 
     // store real binaries in pkg.easy.bin, and fix pkg.bin
     if (pkg.bin) {
-        var bin_easy = '.easy';
+        const bin_easy = '.easy';
         pkg.easy.bin = pkg.easy.bin || extend(true, {}, pkg.bin);
-        for (var name in pkg.bin) {
-            var bin_ori = pkg.bin[name];
-            var bin = path.resolve(bin_ori);
+        for (let name in pkg.bin) {
+            const bin_ori = pkg.bin[name];
+            let bin = path.resolve(bin_ori);
             if (!path.isAbsolute(bin)) {
                 bin = path.join(dir, bin);
             }
-            var relativePath = path.relative(dir, bin);
+            let relativePath = path.relative(dir, bin);
             if (relativePath.slice(0, 2) === '..') {
                 pkg.easy.bin[name] = bin_ori;
                 continue;
@@ -69,7 +67,7 @@ function process(dir, to_dir) {
     }
 
     // prepare pkg_easy
-    var pkg_easy = extend(true, {}, pkg);
+    let pkg_easy = extend(true, {}, pkg);
     pkg_easy.main = pkg.easy.main;
     pkg_easy.scripts = pkg.easy.scripts;
     pkg_easy.bin = pkg.easy.bin;
