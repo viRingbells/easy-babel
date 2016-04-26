@@ -1,6 +1,6 @@
 {
     "name": "easy-babel",
-    "version": "0.0.1-alpha-4",
+    "version": "0.0.1-alpha-3",
     "description": "Easy use of babel to parse your projects/modules",
     "main": ".easy",
     "directories": {
@@ -91,6 +91,8 @@
         "node": ">=undefined"
     },
     "devDependencies": {
+        "mocha": "^2.3.4",
+        "should": "^7.1.1",
         "debug": "^2.2.0"
     },
     "easy": {
