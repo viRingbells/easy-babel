@@ -3,7 +3,7 @@
 'node version >= 5.0.0';
 
 const cwd = process.cwd();
-GLOBAL.commands_cwd = cwd;
+global.commands_cwd = cwd;
 
 const debug = require('debug')('easy-babel');
 const exec = require('child_process').execSync;

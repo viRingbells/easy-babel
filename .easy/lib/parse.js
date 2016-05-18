@@ -128,7 +128,7 @@ function parse_target(target) {
     } else {
         babel_file(target, to);
     }
-    console.log('  ' + chalk.cyan('Parse done') + ': ' + chalk.yellow(target) + chalk.cyan(' ===> ') + chalk.yellow(to));
+    console.log('  ' + chalk.cyan('Parse done') + ': ' + chalk.yellow(target) + chalk.cyan(' ===> ') + chalk.yellow(to) + "(Node v " + version() + ")");
 }
 
 function babel_file(from, to) {

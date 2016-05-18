@@ -3,7 +3,7 @@
  **/
 'use strict';
 
-const cwd = GLOBAL.commands_cwd;
+const cwd = global.commands_cwd;
 const debug = require('debug')('easy-babel');
 const path = require('path');
 
