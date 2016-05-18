@@ -123,12 +123,13 @@ function parse_target(target) {
     cp.execSync('rm -rf ' + easy_dir);
     mkdirp(easy_dir);
     var to = isDirectory ? easy_dir : path.join(easy_dir, filename);
+    console.log('  ' + chalk.cyan('Parsing ') + ': ' + chalk.yellow(target) + chalk.cyan(' ===> ') + chalk.yellow(to) + "(Node v " + version() + ")");
     if (isDirectory) {
         babel_dir(target, to);
     } else {
         babel_file(target, to);
     }
-    console.log('  ' + chalk.cyan('Parse done') + ': ' + chalk.yellow(target) + chalk.cyan(' ===> ') + chalk.yellow(to) + "(Node v " + version() + ")");
+    console.log('  ' + chalk.cyan('Done!'));
 }
 
 function babel_file(from, to) {
