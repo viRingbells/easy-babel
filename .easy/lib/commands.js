@@ -2,18 +2,18 @@
 
 'node version >= 5.0.0';
 
-const cwd = process.cwd();
+var cwd = process.cwd();
 global.commands_cwd = cwd;
 
-const debug = require('debug')('easy-babel');
-const exec = require('child_process').execSync;
-const fs = require('fs');
-const program = require('commander');
-const path = require('path');
-const depends = require('./depends');
-const parse = require('./parse');
+var debug = require('debug')('easy-babel');
+var exec = require('child_process').execSync;
+var fs = require('fs');
+var program = require('commander');
+var path = require('path');
+var depends = require('./depends');
+var parse = require('./parse');
 
-process.on('exit', code => {
+process.on('exit', function (code) {
     debug('Command: cd back to ' + cwd);
     process.chdir(cwd);
 });
@@ -21,7 +21,7 @@ process.on('exit', code => {
 debug('Commands: initializing commands');
 program.usage('[options] <action> <file>');
 
-program.on('--help', () => {
+program.on('--help', function () {
     console.log('  Examples:');
     console.log('');
     console.log('    $ easy depends');
@@ -44,7 +44,7 @@ program.command('*').action(help);
  * Print help if exec without argv
  **/
 if (!process.argv.slice(2).length) {
-    process.nextTick(() => {
+    process.nextTick(function () {
         program.outputHelp();
     });
 }
@@ -55,28 +55,28 @@ function help() {
 
 function run(target) {
     debug('Commands: run ' + target);
-    const execPath = process.execPath;
+    var execPath = process.execPath;
     process.chdir(cwd);
     if (!path.isAbsolute(target)) {
         target = path.join(cwd, target);
     }
-    const basename = path.basename(target);
-    const dirname = path.dirname(target);
-    let split = dirname.split('/');
-    let easypath = target;
-    for (let i = 0; i < split.length; i++) {
-        const tmppath = path.join(split.slice(0, split.length - i).join('/'), '.easy', split.slice(split.length - i).join('/'), basename);
+    var basename = path.basename(target);
+    var dirname = path.dirname(target);
+    var split = dirname.split('/');
+    var easypath = target;
+    for (var i = 0; i < split.length; i++) {
+        var tmppath = path.join(split.slice(0, split.length - i).join('/'), '.easy', split.slice(split.length - i).join('/'), basename);
         if (fs.existsSync(tmppath)) {
             easypath = tmppath;
         }
     }
     debug('Commands: exec ' + execPath + ' ' + (program.nodeargs || '') + ' ' + easypath + ' ' + (program.scriptargs || ''));
-    let out = exec(execPath + ' ' + (program.nodeargs || '') + ' ' + easypath + ' ' + (program.scriptargs || ''));
+    var out = exec(execPath + ' ' + (program.nodeargs || '') + ' ' + easypath + ' ' + (program.scriptargs || ''));
     console.log(out.toString().replace(/\n$/, ''));
 }
 
 debug('Commands: start to parse process argv');
-module.exports = () => {
+module.exports = function () {
     program.parse(process.argv);
 };
 

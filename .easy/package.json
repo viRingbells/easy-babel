@@ -1,6 +1,6 @@
 {
     "name": "easy-babel",
-    "version": "0.0.1-alpha-3",
+    "version": "1.0.2",
     "description": "Easy use of babel to parse your projects/modules",
     "main": "index.js",
     "directories": {
@@ -88,7 +88,7 @@
         "babel-plugin-transform-es2015-unicode-regex": "^6.1.18"
     },
     "engines": {
-        "node": ">=undefined"
+        "node": ">=0.11.9"
     },
     "devDependencies": {
         "mocha": "^2.3.4",

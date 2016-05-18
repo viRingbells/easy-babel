@@ -3,15 +3,15 @@
  **/
 'use strict';
 
-const debug = require('debug')('easy-babel');
-const chalk = require('chalk');
-const fs = require('fs');
-const Module = require('module');
-const path = require('path');
-const testv = require('test-version');
-const parse = require('./parse');
-const prepare = require('./prepare');
-const version = require('./version');
+var debug = require('debug')('easy-babel');
+var chalk = require('chalk');
+var fs = require('fs');
+var Module = require('module');
+var path = require('path');
+var testv = require('test-version');
+var parse = require('./parse');
+var prepare = require('./prepare');
+var version = require('./version');
 
 /**
  * Parse all dependencies
@@ -25,13 +25,13 @@ function depends(targets) {
 
 function directories(parentdir) {
     parentdir = parentdir || '.';
-    return filename => {
+    return function (filename) {
         return fs.statSync(path.join(parentdir, filename)).isDirectory();
     };
 }
 
 function loadPkg(dirname) {
-    let pkg;
+    var pkg = void 0;
     try {
         pkg = require(path.join(dirname, 'package.json'));
     } catch (e) {
@@ -44,7 +44,7 @@ function loadPkg(dirname) {
 
 function parse_node_module(dirname) {
     debug('Depends: parse node_module of ' + dirname);
-    const pkg = loadPkg(dirname);
+    var pkg = loadPkg(dirname);
     if (!pkg) {
         parse_node_module_by_dir(path.join(dirname, 'node_modules'));
     } else {
@@ -54,17 +54,17 @@ function parse_node_module(dirname) {
 
 function parse_node_module_by_pkg(pkg, dirname) {
     debug('Depends: parse by pkg ');
-    for (const module_name in pkg.dependencies || {}) {
-        const module_path = find_module_path(module_name, dirname);
+    for (var module_name in pkg.dependencies || {}) {
+        var module_path = find_module_path(module_name, dirname);
         parse_module(module_path);
     }
 }
 
 function find_module_path(module_name, dirname) {
     debug('Depends: find module path of ' + module_name);
-    const paths = Module._nodeModulePaths(dirname);
-    for (let i = 0; i < paths.length; i++) {
-        const _path = path.join(paths[i], module_name);
+    var paths = Module._nodeModulePaths(dirname);
+    for (var i = 0; i < paths.length; i++) {
+        var _path = path.join(paths[i], module_name);
         if (fs.existsSync(_path) && fs.statSync(_path).isDirectory()) {
             return _path;
         }
@@ -77,7 +77,7 @@ function find_module_path(module_name, dirname) {
 
 function parse_node_module_by_dir(node_module_path) {
     debug('Depends: parse by dir ' + node_module_path);
-    fs.readdirSync(node_module_path).filter(directories(node_module_path)).forEach(dirname => {
+    fs.readdirSync(node_module_path).filter(directories(node_module_path)).forEach(function (dirname) {
         parse_module(path.join(node_module_path, dirname));
     });
 }
@@ -89,9 +89,9 @@ function parse_module(module_path) {
         }
         return;
     }
-    const module_dirname = path.basename(module_path);
+    var module_dirname = path.basename(module_path);
     if (module_dirname[0] === '.') return;
-    let pkg;
+    var pkg = void 0;
     try {
         pkg = require(path.join(module_path, 'package.json'));
     } catch (e) {
